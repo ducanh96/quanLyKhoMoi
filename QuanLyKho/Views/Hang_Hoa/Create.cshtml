@@ -1,0 +1,265 @@
+﻿@model QuanLyKho.Models.ModelDB.Hang_Hoa
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    AjaxOptions opt = new AjaxOptions
+    {
+        UpdateTargetId = "tb",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "Post",
+        LoadingElementId ="loader",
+        OnSuccess ="success"
+     
+
+
+    };
+    AjaxOptions opt2 = new AjaxOptions
+    {
+        UpdateTargetId = "ncc",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "Post",
+        LoadingElementId = "loader2",
+        OnSuccess = "success2"
+
+    };
+}
+<script src="~/scripts/jquery-1.12.4.min.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Hang_Hoa</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ten_Hang_Hoa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ten_Hang_Hoa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ten_Hang_Hoa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ma_Loai, "Ma_Loai", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Ma_Loai", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Ma_Loai, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-offset-2 col-md-10">
+                <a data-toggle="modal" data-target="#myModal" href="#">Tạo mới loại sản phẩm</a>
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nha_Cung_Cap_Id, "Nha_Cung_Cap_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Nha_Cung_Cap_Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nha_Cung_Cap_Id, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <a data-toggle="modal" data-target="#myNCC" href="#">Tạo mới nhà cung cấp</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<div class="container">
+  
+  
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Phần đầu Modal</h4>
+                    
+                </div>
+               @using (Ajax.BeginForm("CreateLoai_SP",opt))
+               {
+
+                    <div class="modal-body">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                           
+                           
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Tên loại</label>
+                                <div class="col-md-10">
+                                    @Html.TextBox("Ten_Loai", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessage("Ten_Loai", "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-offset-2 col-md-10" id="tb">
+                               
+                            </div>
+                            <br />
+                        </div>
+                       
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                      
+                    </div>
+                    <div id="loader" style="display:none">
+                        <div class="center-block">
+                            <div class="box box-danger box-solid">
+                                <div class="box-header text-center">
+                                    <h3 class="box-title danger">Thông báo</h3>
+                                </div>
+                                <div class="box-body text-center">
+                                    Đang xử lý dữ liệu
+                                </div>
+                                <!-- /.box-body -->
+                                <!-- Loading (remove the following to stop the loading)-->
+                                <div class="overlay">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+                                <!-- end loading -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+               }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+  
+    <!-- Modal -->
+    <div id="myNCC" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Phần đầu Modal</h4>
+
+                </div>
+                @using (Ajax.BeginForm("CreateNCC", opt2))
+                {
+
+                    <div class="modal-body">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+
+                           
+                            <div class="form-group">
+                                <label class="control-label col-md-3">Tên nhà cung cấp</label>
+                                <div class="col-md-9">
+                                    @Html.TextBox("Ten_Nha_Cung_Cap", null, htmlAttributes: new { @class = "form-control" })
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-offset-3 col-md-9" id="ncc">
+
+                            </div>
+                            <br />
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+
+                    </div>
+                    <div id="loader2" style="display:none">
+                        <div class="center-block">
+                            <div class="box box-danger box-solid">
+                                <div class="box-header text-center">
+                                    <h3 class="box-title danger">Thông báo</h3>
+                                </div>
+                                <div class="box-body text-center">
+                                    Đang xử lý dữ liệu
+                                </div>
+                                <!-- /.box-body -->
+                                <!-- Loading (remove the following to stop the loading)-->
+                                <div class="overlay">
+                                    <i class="fa fa-refresh fa-spin"></i>
+                                </div>
+                                <!-- end loading -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function success()
+    {
+        var kq = $("#tb").text();
+        var tim = kq.indexOf("mới");
+        if(tim != -1)
+        {
+           
+            setTimeout(function () {
+                location = "/Hang_Hoa/Create";
+            }, 1000);
+            
+           
+            
+        }
+       
+    }
+    function success2() {
+        var kq = $("#ncc").text();
+        var tim = kq.indexOf("mới");
+        if (tim != -1) {
+
+            setTimeout(function () {
+                location = "/Hang_Hoa/Create";
+            }, 1000);
+
+
+
+        }
+
+    }
+   
+    
+</script>

@@ -1,0 +1,65 @@
+﻿@model QuanLyKho.Models.ModelDB.Hang_Hoa
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Hang_Hoa</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Hang_Hoa_Id)
+
+        <div class="form-group">
+            <label class = "control-label col-md-2">Tên hàng hóa</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ten_Hang_Hoa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ten_Hang_Hoa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+             <label  class = "control-label col-md-2" >Tên loại</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Ma_Loai", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Ma_Loai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    
+        <div class="form-group">
+           <label class = "control-label col-md-2">Trạng thái</label>
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsActive)
+                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+           <label class = "control-label col-md-2">Tên nhà cung cấp</label>
+            <div class="col-md-10">
+                @Html.DropDownList("Nha_Cung_Cap_Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Nha_Cung_Cap_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

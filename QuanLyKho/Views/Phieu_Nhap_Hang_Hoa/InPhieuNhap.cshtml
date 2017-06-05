@@ -1,0 +1,97 @@
+﻿@model List<QuanLyKho.Models.ModelDB.Phieu_Nhap_Hang_Hoa>
+@using QuanLyKho.Models.ModelDB;
+@using QuanLyKho.Models.ModelManager;
+@{
+    ViewBag.Title = "InPhieuXuat";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var pn = (Phieu_Nhap)ViewBag.pn;
+    var manager = new ManagerLogin();
+    int id = ManagerLogin.GetId(User.Identity.Name);
+    var userProflie = manager.GetUserProfile(id);
+
+}
+<link href="~/Content/Invoice/cssInvoice.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-11">
+            <div class="invoice-title text-center">
+                <h2>Phiếu nhập chi tiết</h2>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <address>
+                        <strong>Người lập phiếu:</strong><br>
+                        @userProflie.Name<br>
+                        <br>
+                        <br>
+
+                    </address>
+                </div>
+                <div class="col-md-6 text-right">
+                    <address>
+                        <strong>Ngày lập phiếu:</strong><br>
+                        @pn.Ngay_Nhap<br><br>
+                    </address>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Order summary</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <td><strong>Item</strong></td>
+                                    <td class="text-center"><strong>Price(VND)</strong></td>
+                                    <td class="text-center"><strong>Quantity</strong></td>
+                                    <td class="text-right"><strong>Totals</strong></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Hang_Hoa.Ten_Hang_Hoa</td>
+                                        <td class="text-center">@string.Format("{0:0,0}", item.Don_gia)</td>
+                                        <td class="text-center">@item.So_Luong</td>
+                                        @{
+                                            var tam = item.Don_gia * item.So_Luong;
+                                        }
+                                        <td class="text-right">@string.Format("{0:0,0}", tam)</td>
+                                    </tr>
+                                            }
+
+
+                                <tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-center"><strong>Total</strong></td>
+                                    <td class="thick-line text-right">@string.Format("{0:0,0}", pn.Tong_Tien)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>

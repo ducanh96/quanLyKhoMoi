@@ -1,0 +1,51 @@
+﻿@model QuanLyKho.Models.ModelDB.Phieu_Xuat_Kho_Chua
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutDataTable.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Phieu_Xuat_Kho_Chua</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Don_Gia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Don_Gia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.So_Luong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.So_Luong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kho_Chua.Hang_Hoa_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kho_Chua.Hang_Hoa_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phieu_Xuat.Phieu_Xuat_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phieu_Xuat.Phieu_Xuat_Id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

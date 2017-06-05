@@ -1,0 +1,245 @@
+﻿@model List<QuanLyKho.Models.ModelDB.Hang_Hoa>
+
+@{
+    ViewBag.Title = "Index2";
+    Layout = "~/Views/Shared/_LayoutDataTable.cshtml";
+
+}
+
+<section class="content-header">
+    <h1>
+        Data Tables
+        <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><span class="label label-success">Phiếu nhập kho</span></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tableKho" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                                <th>Đơn giá (VNĐ)</th>
+                                <th>Số lượng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+
+                        <tfoot>
+                            <tr>
+                                <td><button type="button" class="btn btn-block btn-primary" id="ketThuc">Kết thúc</button></td>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-md-3">
+                        <h3 class="box-title">Danh sách hàng hóa</h3>
+                    </div>
+                    <div class="col-md-9">
+                        <a href="@Url.Action("Create","Hang_Hoa")" class="btn btn-success">Tạo mới hàng hóa</a>
+
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                                <th hidden="hidden"></th>
+                                <th hidden="hidden"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Ten_Hang_Hoa</td>
+                                    <td>@item.Loai_SP.Ten_Loai</td>
+                                    <td>@item.Nha_Cung_Cap.Ten_Nha_Cung_Cap</td>
+                                    <td hidden="hidden"><input type="number" class="form-control"/></td>
+                                    <td hidden="hidden"><input type="number" class="form-control @item.Hang_Hoa_Id"></td>
+                                    <td class="bam"><input type="button" class="btn btn-block btn-success" id="@item.Hang_Hoa_Id" value="Chọn" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                                <th hidden="hidden"></th>
+                                <th hidden="hidden"></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var ktra = 0;
+
+        $("input[type='number']").keydown(function (event) {
+
+            if ((event.which < 48 || event.which > 57) && event.which != 8) {
+                alert("Chi duoc nhap so");
+                return false;
+            }
+        });
+
+            var mangTT = new Array();
+
+            $("#example1").DataTable();
+
+
+            //.click(function () {
+            //    var tam = $(this);
+            //    alert(tam.text());
+            //$(this).fadeOut(1000, function () {
+            //    $("#example1 tbody").append(tam);
+            //});
+
+
+            $("#example1 tr").each(function () {
+                var tr = $(this);
+                $(this).children(".bam").click(function () {
+
+                    var tdNut = $(this);
+                    var id = tdNut.children().attr("id");
+                    var vitri = mangTT.indexOf(id);
+                    if (vitri == -1)
+                    {
+                        mangTT.push(id);
+                        tr.fadeOut(1000, function () {
+                            tdNut.children().val("Bỏ chọn");
+                            tdNut.prev().prev().removeAttr("hidden");
+                            tdNut.prev().removeAttr("hidden");
+                            $("#tableKho tbody").append(tr);
+                            $(this).fadeIn(1000);
+                        })
+                    }
+                    else {
+                        mangTT.splice(vitri,1);
+                        tr.fadeOut(1000, function () {
+                            tdNut.children().val("Chọn");
+                            tdNut.prev().prev().attr("hidden","hidden");
+                            tdNut.prev().attr("hidden", "hidden");
+                            $("#example1 tbody").append(tr);
+                            $(this).fadeIn(1000);
+                        })
+                    }
+
+
+                });
+
+            });
+
+
+            $("#ketThuc").click(function () {
+                var ktra = 0;
+                var mang = new Array();
+                var dem = 0;
+
+                for (var i = 0; i < mangTT.length; i++) {
+
+                    if ($("." + mangTT[i]).val().length == 0)
+                    {
+                        alert("Nhập số lượng");
+                        ktra++;
+                        return false;
+                    }
+                    else {
+                        var Phieu_Nhap_Json = new Object();
+                        Phieu_Nhap_Json.Hang_Hoa_id = mangTT[i];
+                        Phieu_Nhap_Json.So_Luong = $("." + mangTT[i]).val();
+                        Phieu_Nhap_Json.Don_gia = $("." + mangTT[i]).parent().prev().children().val();
+                        mang.push(Phieu_Nhap_Json);
+
+
+                    }
+
+                }
+                if(mang.length>0)
+                {
+                    if (ktra == 0 && confirm("Bạn có chắc chắn lưu?")) {
+                        var json = JSON.stringify(mang);
+                        alert(json);
+                        $.ajax({
+                            type: "Post",
+                            url: '/Phieu_Nhap_Hang_Hoa/InsertPhieuNhap',
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            data: json,
+                            success: function (response) {
+                                if (response.Ok == true) {
+                                    alert("Tao phieu nhap thanh cong");
+                                    window.location = response.newurl;
+                                }
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+
+
+                        });
+
+
+                    }
+                }
+                else if(mang.length == 0)
+                {
+                    alert("Không có dữ liệu");
+                }
+
+            })
+
+        })
+
+
+
+
+
+
+</script>

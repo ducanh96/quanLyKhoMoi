@@ -1,0 +1,59 @@
+﻿@model QuanLyKho.Models.ModelDB.Hang_Hoa
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Hang_Hoa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ten_Hang_Hoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ten_Hang_Hoa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Don_Gia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Don_Gia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Loai_SP.Ten_Loai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Loai_SP.Ten_Loai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nha_Cung_Cap.Ten_Nha_Cung_Cap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nha_Cung_Cap.Ten_Nha_Cung_Cap)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Hang_Hoa_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

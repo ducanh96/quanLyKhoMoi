@@ -1,0 +1,823 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QuanLyKhoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Hang_Hoa">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten_Hang_Hoa" Type="nvarchar" MaxLength="250" />
+          <Property Name="Ma_Loai" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Nha_Cung_Cap_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Kho_Chua">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_Id" Type="int" Nullable="false" />
+          <Property Name="So_Luong" Type="int" />
+        </EntityType>
+        <EntityType Name="Loai_SP">
+          <Key>
+            <PropertyRef Name="Loai_Sp_Id" />
+          </Key>
+          <Property Name="Loai_Sp_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten_Loai" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Nha_Cung_Cap">
+          <Key>
+            <PropertyRef Name="Nha_Cung_Cap_Id" />
+          </Key>
+          <Property Name="Nha_Cung_Cap_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ten_Nha_Cung_Cap" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Phieu_Nhap">
+          <Key>
+            <PropertyRef Name="Phieu_Nhap_Id" />
+          </Key>
+          <Property Name="Phieu_Nhap_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ngay_Nhap" Type="datetime" />
+          <Property Name="Tong_Tien" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Phieu_Nhap_Hang_Hoa">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_id" />
+            <PropertyRef Name="Phieu_Nhap_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_id" Type="int" Nullable="false" />
+          <Property Name="Phieu_Nhap_Id" Type="int" Nullable="false" />
+          <Property Name="Don_gia" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="So_Luong" Type="int" />
+        </EntityType>
+        <EntityType Name="Phieu_Xuat">
+          <Key>
+            <PropertyRef Name="Phieu_Xuat_Id" />
+          </Key>
+          <Property Name="Phieu_Xuat_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tong_Tien" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Ngay_Xuat" Type="datetime" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Phieu_Xuat_Kho_Chua">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_Id" />
+            <PropertyRef Name="Phieu_Xuat_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_Id" Type="int" Nullable="false" />
+          <Property Name="Phieu_Xuat_Id" Type="int" Nullable="false" />
+          <Property Name="Don_Gia" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="So_Luong" Type="int" />
+        </EntityType>
+        <EntityType Name="Table_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleDiscription" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Table_User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sex" Type="bit" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Hang_Hoa__Ma_Loa__5DCAEF64">
+          <End Role="Loai_SP" Type="Self.Loai_SP" Multiplicity="0..1" />
+          <End Role="Hang_Hoa" Type="Self.Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loai_SP">
+              <PropertyRef Name="Loai_Sp_Id" />
+            </Principal>
+            <Dependent Role="Hang_Hoa">
+              <PropertyRef Name="Ma_Loai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Kho_Chua__Hang_H__160F4887">
+          <End Role="Hang_Hoa" Type="Self.Hang_Hoa" Multiplicity="1" />
+          <End Role="Kho_Chua" Type="Self.Kho_Chua" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Hang_Hoa">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Principal>
+            <Dependent Role="Kho_Chua">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Nha__Hang___5CD6CB2B">
+          <End Role="Hang_Hoa" Type="Self.Hang_Hoa" Multiplicity="1" />
+          <End Role="Phieu_Nhap_Hang_Hoa" Type="Self.Phieu_Nhap_Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hang_Hoa">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Nhap_Hang_Hoa">
+              <PropertyRef Name="Hang_Hoa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Nha__Phieu__276EDEB3">
+          <End Role="Phieu_Nhap" Type="Self.Phieu_Nhap" Multiplicity="1" />
+          <End Role="Phieu_Nhap_Hang_Hoa" Type="Self.Phieu_Nhap_Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phieu_Nhap">
+              <PropertyRef Name="Phieu_Nhap_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Nhap_Hang_Hoa">
+              <PropertyRef Name="Phieu_Nhap_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Nha__UserI__2739D489">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="0..1" />
+          <End Role="Phieu_Nhap" Type="Self.Phieu_Nhap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Phieu_Nhap">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Xua__Hang___2F10007B">
+          <End Role="Kho_Chua" Type="Self.Kho_Chua" Multiplicity="1" />
+          <End Role="Phieu_Xuat_Kho_Chua" Type="Self.Phieu_Xuat_Kho_Chua" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kho_Chua">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Xuat_Kho_Chua">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Xua__Phieu__300424B4">
+          <End Role="Phieu_Xuat" Type="Self.Phieu_Xuat" Multiplicity="1" />
+          <End Role="Phieu_Xuat_Kho_Chua" Type="Self.Phieu_Xuat_Kho_Chua" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phieu_Xuat">
+              <PropertyRef Name="Phieu_Xuat_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Xuat_Kho_Chua">
+              <PropertyRef Name="Phieu_Xuat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Xua__UserI__282DF8C2">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="0..1" />
+          <End Role="Phieu_Xuat" Type="Self.Phieu_Xuat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Phieu_Xuat">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserProfi__UserI__3D5E1FD2">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangHoa_NhaCUngCap">
+          <End Role="Nha_Cung_Cap" Type="Self.Nha_Cung_Cap" Multiplicity="0..1" />
+          <End Role="Hang_Hoa" Type="Self.Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nha_Cung_Cap">
+              <PropertyRef Name="Nha_Cung_Cap_Id" />
+            </Principal>
+            <Dependent Role="Hang_Hoa">
+              <PropertyRef Name="Nha_Cung_Cap_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UR_Role">
+          <End Role="Table_Role" Type="Self.Table_Role" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UR_USer">
+          <End Role="Table_User" Type="Self.Table_User" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_Ma_Phieu_Gan_Nhat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_UpdateTongTien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ma_phieu" Type="int" Mode="In" />
+          <Parameter Name="tong_tien" Type="decimal" Mode="In" />
+        </Function>
+        <EntityContainer Name="QuanLyKhoModelStoreContainer">
+          <EntitySet Name="Hang_Hoa" EntityType="Self.Hang_Hoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kho_Chua" EntityType="Self.Kho_Chua" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Loai_SP" EntityType="Self.Loai_SP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nha_Cung_Cap" EntityType="Self.Nha_Cung_Cap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phieu_Nhap" EntityType="Self.Phieu_Nhap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phieu_Nhap_Hang_Hoa" EntityType="Self.Phieu_Nhap_Hang_Hoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phieu_Xuat" EntityType="Self.Phieu_Xuat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phieu_Xuat_Kho_Chua" EntityType="Self.Phieu_Xuat_Kho_Chua" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Role" EntityType="Self.Table_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_User" EntityType="Self.Table_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Hang_Hoa__Ma_Loa__5DCAEF64" Association="Self.FK__Hang_Hoa__Ma_Loa__5DCAEF64">
+            <End Role="Loai_SP" EntitySet="Loai_SP" />
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Kho_Chua__Hang_H__160F4887" Association="Self.FK__Kho_Chua__Hang_H__160F4887">
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+            <End Role="Kho_Chua" EntitySet="Kho_Chua" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Nha__Hang___5CD6CB2B" Association="Self.FK__Phieu_Nha__Hang___5CD6CB2B">
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+            <End Role="Phieu_Nhap_Hang_Hoa" EntitySet="Phieu_Nhap_Hang_Hoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Nha__Phieu__276EDEB3" Association="Self.FK__Phieu_Nha__Phieu__276EDEB3">
+            <End Role="Phieu_Nhap" EntitySet="Phieu_Nhap" />
+            <End Role="Phieu_Nhap_Hang_Hoa" EntitySet="Phieu_Nhap_Hang_Hoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Nha__UserI__2739D489" Association="Self.FK__Phieu_Nha__UserI__2739D489">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Phieu_Nhap" EntitySet="Phieu_Nhap" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Xua__Hang___2F10007B" Association="Self.FK__Phieu_Xua__Hang___2F10007B">
+            <End Role="Kho_Chua" EntitySet="Kho_Chua" />
+            <End Role="Phieu_Xuat_Kho_Chua" EntitySet="Phieu_Xuat_Kho_Chua" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Xua__Phieu__300424B4" Association="Self.FK__Phieu_Xua__Phieu__300424B4">
+            <End Role="Phieu_Xuat" EntitySet="Phieu_Xuat" />
+            <End Role="Phieu_Xuat_Kho_Chua" EntitySet="Phieu_Xuat_Kho_Chua" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Xua__UserI__282DF8C2" Association="Self.FK__Phieu_Xua__UserI__282DF8C2">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Phieu_Xuat" EntitySet="Phieu_Xuat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserProfi__UserI__3D5E1FD2" Association="Self.FK__UserProfi__UserI__3D5E1FD2">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangHoa_NhaCUngCap" Association="Self.FK_HangHoa_NhaCUngCap">
+            <End Role="Nha_Cung_Cap" EntitySet="Nha_Cung_Cap" />
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UR_Role" Association="Self.FK_UR_Role">
+            <End Role="Table_Role" EntitySet="Table_Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UR_USer" Association="Self.FK_UR_USer">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLyKhoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Kho_Chua">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_Id" Type="Int32" Nullable="false" />
+          <Property Name="So_Luong" Type="Int32" />
+          <NavigationProperty Name="Phieu_Xuat_Kho_Chua" Relationship="Self.FK__Phieu_Xua__Hang___2F10007B" FromRole="Kho_Chua" ToRole="Phieu_Xuat_Kho_Chua" />
+          <NavigationProperty Name="Hang_Hoa" Relationship="QuanLyKhoModel.FK__Kho_Chua__Hang_H__160F4887" FromRole="Kho_Chua" ToRole="Hang_Hoa" />
+        </EntityType>
+        <EntityType Name="Loai_SP">
+          <Key>
+            <PropertyRef Name="Loai_Sp_Id" />
+          </Key>
+          <Property Name="Loai_Sp_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten_Loai" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hang_Hoa" Relationship="QuanLyKhoModel.FK__Hang_Hoa__Ma_Loa__5DCAEF64" FromRole="Loai_SP" ToRole="Hang_Hoa" />
+        </EntityType>
+        <EntityType Name="Nha_Cung_Cap">
+          <Key>
+            <PropertyRef Name="Nha_Cung_Cap_Id" />
+          </Key>
+          <Property Name="Nha_Cung_Cap_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten_Nha_Cung_Cap" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hang_Hoa" Relationship="QuanLyKhoModel.FK_HangHoa_NhaCUngCap" FromRole="Nha_Cung_Cap" ToRole="Hang_Hoa" />
+        </EntityType>
+        <EntityType Name="Phieu_Nhap_Hang_Hoa">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_id" />
+            <PropertyRef Name="Phieu_Nhap_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_id" Type="Int32" Nullable="false" />
+          <Property Name="Phieu_Nhap_Id" Type="Int32" Nullable="false" />
+          <Property Name="Don_gia" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="So_Luong" Type="Int32" />
+          <NavigationProperty Name="Phieu_Nhap" Relationship="QuanLyKhoModel.FK__Phieu_Nha__Phieu__276EDEB3" FromRole="Phieu_Nhap_Hang_Hoa" ToRole="Phieu_Nhap" />
+          <NavigationProperty Name="Hang_Hoa" Relationship="QuanLyKhoModel.FK__Phieu_Nha__Hang___5CD6CB2B" FromRole="Phieu_Nhap_Hang_Hoa" ToRole="Hang_Hoa" />
+        </EntityType>
+        <EntityType Name="Phieu_Xuat_Kho_Chua">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_Id" />
+            <PropertyRef Name="Phieu_Xuat_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_Id" Type="Int32" Nullable="false" />
+          <Property Name="Phieu_Xuat_Id" Type="Int32" Nullable="false" />
+          <Property Name="Don_Gia" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="So_Luong" Type="Int32" />
+          <NavigationProperty Name="Kho_Chua" Relationship="Self.FK__Phieu_Xua__Hang___2F10007B" FromRole="Phieu_Xuat_Kho_Chua" ToRole="Kho_Chua" />
+          <NavigationProperty Name="Phieu_Xuat" Relationship="QuanLyKhoModel.FK__Phieu_Xua__Phieu__300424B4" FromRole="Phieu_Xuat_Kho_Chua" ToRole="Phieu_Xuat" />
+        </EntityType>
+        <EntityType Name="Table_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleDiscription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRoles" Relationship="Self.FK_UR_Role" FromRole="Table_Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Table_Role" Relationship="Self.FK_UR_Role" FromRole="UserRole" ToRole="Table_Role" />
+          <NavigationProperty Name="Table_User" Relationship="QuanLyKhoModel.FK_UR_USer" FromRole="UserRole" ToRole="Table_User" />
+        </EntityType>
+        <Association Name="FK__Phieu_Xua__Hang___2F10007B">
+          <End Role="Kho_Chua" Type="Self.Kho_Chua" Multiplicity="1" />
+          <End Role="Phieu_Xuat_Kho_Chua" Type="Self.Phieu_Xuat_Kho_Chua" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kho_Chua">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Xuat_Kho_Chua">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UR_Role">
+          <End Role="Table_Role" Type="Self.Table_Role" Multiplicity="1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyKhoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kho_Chua" EntityType="Self.Kho_Chua" />
+          <EntitySet Name="Loai_SP" EntityType="Self.Loai_SP" />
+          <EntitySet Name="Nha_Cung_Cap" EntityType="Self.Nha_Cung_Cap" />
+          <EntitySet Name="Phieu_Nhap_Hang_Hoa" EntityType="Self.Phieu_Nhap_Hang_Hoa" />
+          <EntitySet Name="Phieu_Xuat_Kho_Chua" EntityType="Self.Phieu_Xuat_Kho_Chua" />
+          <EntitySet Name="Table_Role" EntityType="Self.Table_Role" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <AssociationSet Name="FK__Phieu_Xua__Hang___2F10007B" Association="Self.FK__Phieu_Xua__Hang___2F10007B">
+            <End Role="Kho_Chua" EntitySet="Kho_Chua" />
+            <End Role="Phieu_Xuat_Kho_Chua" EntitySet="Phieu_Xuat_Kho_Chua" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UR_Role" Association="Self.FK_UR_Role">
+            <End Role="Table_Role" EntitySet="Table_Role" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <FunctionImport Name="sp_Ma_Phieu_Gan_Nhat" ReturnType="Collection(QuanLyKhoModel.sp_Ma_Phieu_Gan_Nhat_Result)" />
+          <FunctionImport Name="sp_UpdateTongTien">
+            <Parameter Name="ma_phieu" Mode="In" Type="Int32" />
+            <Parameter Name="tong_tien" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="Phieu_Nhap" EntityType="QuanLyKhoModel.Phieu_Nhap" />
+          <AssociationSet Name="FK__Phieu_Nha__Phieu__276EDEB3" Association="QuanLyKhoModel.FK__Phieu_Nha__Phieu__276EDEB3">
+            <End Role="Phieu_Nhap" EntitySet="Phieu_Nhap" />
+            <End Role="Phieu_Nhap_Hang_Hoa" EntitySet="Phieu_Nhap_Hang_Hoa" />
+          </AssociationSet>
+          <EntitySet Name="Phieu_Xuat" EntityType="QuanLyKhoModel.Phieu_Xuat" />
+          <AssociationSet Name="FK__Phieu_Xua__Phieu__300424B4" Association="QuanLyKhoModel.FK__Phieu_Xua__Phieu__300424B4">
+            <End Role="Phieu_Xuat" EntitySet="Phieu_Xuat" />
+            <End Role="Phieu_Xuat_Kho_Chua" EntitySet="Phieu_Xuat_Kho_Chua" />
+          </AssociationSet>
+          <EntitySet Name="Hang_Hoa" EntityType="QuanLyKhoModel.Hang_Hoa" />
+          <AssociationSet Name="FK__Hang_Hoa__Ma_Loa__5DCAEF64" Association="QuanLyKhoModel.FK__Hang_Hoa__Ma_Loa__5DCAEF64">
+            <End Role="Loai_SP" EntitySet="Loai_SP" />
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Kho_Chua__Hang_H__160F4887" Association="QuanLyKhoModel.FK__Kho_Chua__Hang_H__160F4887">
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+            <End Role="Kho_Chua" EntitySet="Kho_Chua" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Nha__Hang___5CD6CB2B" Association="QuanLyKhoModel.FK__Phieu_Nha__Hang___5CD6CB2B">
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+            <End Role="Phieu_Nhap_Hang_Hoa" EntitySet="Phieu_Nhap_Hang_Hoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangHoa_NhaCUngCap" Association="QuanLyKhoModel.FK_HangHoa_NhaCUngCap">
+            <End Role="Nha_Cung_Cap" EntitySet="Nha_Cung_Cap" />
+            <End Role="Hang_Hoa" EntitySet="Hang_Hoa" />
+          </AssociationSet>
+          <EntitySet Name="UserProfiles" EntityType="QuanLyKhoModel.UserProfile" />
+          <EntitySet Name="Table_User" EntityType="QuanLyKhoModel.Table_User" />
+          <AssociationSet Name="FK__Phieu_Nha__UserI__2739D489" Association="QuanLyKhoModel.FK__Phieu_Nha__UserI__2739D489">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Phieu_Nhap" EntitySet="Phieu_Nhap" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phieu_Xua__UserI__282DF8C2" Association="QuanLyKhoModel.FK__Phieu_Xua__UserI__282DF8C2">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="Phieu_Xuat" EntitySet="Phieu_Xuat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserProfi__UserI__3D5E1FD2" Association="QuanLyKhoModel.FK__UserProfi__UserI__3D5E1FD2">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UR_USer" Association="QuanLyKhoModel.FK_UR_USer">
+            <End Role="Table_User" EntitySet="Table_User" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="sp_Ma_Phieu_Gan_Nhat_Result">
+          <Property Type="Int32" Name="Phieu_Nhap_Id" Nullable="false" />
+          <Property Type="DateTime" Name="Ngay_Nhap" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="Tong_Tien" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <EntityType Name="Phieu_Nhap">
+          <Key>
+            <PropertyRef Name="Phieu_Nhap_Id" />
+          </Key>
+          <Property Name="Phieu_Nhap_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ngay_Nhap" Type="DateTime" Precision="3" />
+          <Property Name="Tong_Tien" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="Phieu_Nhap_Hang_Hoa" Relationship="QuanLyKhoModel.FK__Phieu_Nha__Phieu__276EDEB3" FromRole="Phieu_Nhap" ToRole="Phieu_Nhap_Hang_Hoa" />
+          <NavigationProperty Name="Table_User" Relationship="QuanLyKhoModel.FK__Phieu_Nha__UserI__2739D489" FromRole="Phieu_Nhap" ToRole="Table_User" />
+        </EntityType>
+        <Association Name="FK__Phieu_Nha__Phieu__276EDEB3">
+          <End Type="QuanLyKhoModel.Phieu_Nhap" Role="Phieu_Nhap" Multiplicity="1" />
+          <End Type="QuanLyKhoModel.Phieu_Nhap_Hang_Hoa" Role="Phieu_Nhap_Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phieu_Nhap">
+              <PropertyRef Name="Phieu_Nhap_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Nhap_Hang_Hoa">
+              <PropertyRef Name="Phieu_Nhap_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Phieu_Xuat">
+          <Key>
+            <PropertyRef Name="Phieu_Xuat_Id" />
+          </Key>
+          <Property Name="Phieu_Xuat_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tong_Tien" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Ngay_Xuat" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="Phieu_Xuat_Kho_Chua" Relationship="QuanLyKhoModel.FK__Phieu_Xua__Phieu__300424B4" FromRole="Phieu_Xuat" ToRole="Phieu_Xuat_Kho_Chua" />
+          <NavigationProperty Name="Table_User" Relationship="QuanLyKhoModel.FK__Phieu_Xua__UserI__282DF8C2" FromRole="Phieu_Xuat" ToRole="Table_User" />
+        </EntityType>
+        <Association Name="FK__Phieu_Xua__Phieu__300424B4">
+          <End Type="QuanLyKhoModel.Phieu_Xuat" Role="Phieu_Xuat" Multiplicity="1" />
+          <End Type="QuanLyKhoModel.Phieu_Xuat_Kho_Chua" Role="Phieu_Xuat_Kho_Chua" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phieu_Xuat">
+              <PropertyRef Name="Phieu_Xuat_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Xuat_Kho_Chua">
+              <PropertyRef Name="Phieu_Xuat_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Hang_Hoa">
+          <Key>
+            <PropertyRef Name="Hang_Hoa_Id" />
+          </Key>
+          <Property Name="Hang_Hoa_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ten_Hang_Hoa" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Ma_Loai" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Nha_Cung_Cap_Id" Type="Int32" />
+          <NavigationProperty Name="Loai_SP" Relationship="QuanLyKhoModel.FK__Hang_Hoa__Ma_Loa__5DCAEF64" FromRole="Hang_Hoa" ToRole="Loai_SP" />
+          <NavigationProperty Name="Kho_Chua" Relationship="QuanLyKhoModel.FK__Kho_Chua__Hang_H__160F4887" FromRole="Hang_Hoa" ToRole="Kho_Chua" />
+          <NavigationProperty Name="Phieu_Nhap_Hang_Hoa" Relationship="QuanLyKhoModel.FK__Phieu_Nha__Hang___5CD6CB2B" FromRole="Hang_Hoa" ToRole="Phieu_Nhap_Hang_Hoa" />
+          <NavigationProperty Name="Nha_Cung_Cap" Relationship="QuanLyKhoModel.FK_HangHoa_NhaCUngCap" FromRole="Hang_Hoa" ToRole="Nha_Cung_Cap" />
+        </EntityType>
+        <Association Name="FK__Hang_Hoa__Ma_Loa__5DCAEF64">
+          <End Type="QuanLyKhoModel.Loai_SP" Role="Loai_SP" Multiplicity="0..1" />
+          <End Type="QuanLyKhoModel.Hang_Hoa" Role="Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Loai_SP">
+              <PropertyRef Name="Loai_Sp_Id" />
+            </Principal>
+            <Dependent Role="Hang_Hoa">
+              <PropertyRef Name="Ma_Loai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Kho_Chua__Hang_H__160F4887">
+          <End Type="QuanLyKhoModel.Hang_Hoa" Role="Hang_Hoa" Multiplicity="1" />
+          <End Type="QuanLyKhoModel.Kho_Chua" Role="Kho_Chua" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Hang_Hoa">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Principal>
+            <Dependent Role="Kho_Chua">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Nha__Hang___5CD6CB2B">
+          <End Type="QuanLyKhoModel.Hang_Hoa" Role="Hang_Hoa" Multiplicity="1" />
+          <End Type="QuanLyKhoModel.Phieu_Nhap_Hang_Hoa" Role="Phieu_Nhap_Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hang_Hoa">
+              <PropertyRef Name="Hang_Hoa_Id" />
+            </Principal>
+            <Dependent Role="Phieu_Nhap_Hang_Hoa">
+              <PropertyRef Name="Hang_Hoa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangHoa_NhaCUngCap">
+          <End Type="QuanLyKhoModel.Nha_Cung_Cap" Role="Nha_Cung_Cap" Multiplicity="0..1" />
+          <End Type="QuanLyKhoModel.Hang_Hoa" Role="Hang_Hoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Nha_Cung_Cap">
+              <PropertyRef Name="Nha_Cung_Cap_Id" />
+            </Principal>
+            <Dependent Role="Hang_Hoa">
+              <PropertyRef Name="Nha_Cung_Cap_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="Boolean" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Table_User" Relationship="QuanLyKhoModel.FK__UserProfi__UserI__3D5E1FD2" FromRole="UserProfile" ToRole="Table_User" />
+        </EntityType>
+        <EntityType Name="Table_User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Phieu_Nhap" Relationship="QuanLyKhoModel.FK__Phieu_Nha__UserI__2739D489" FromRole="Table_User" ToRole="Phieu_Nhap" />
+          <NavigationProperty Name="Phieu_Xuat" Relationship="QuanLyKhoModel.FK__Phieu_Xua__UserI__282DF8C2" FromRole="Table_User" ToRole="Phieu_Xuat" />
+          <NavigationProperty Name="UserProfile" Relationship="QuanLyKhoModel.FK__UserProfi__UserI__3D5E1FD2" FromRole="Table_User" ToRole="UserProfile" />
+          <NavigationProperty Name="UserRoles" Relationship="QuanLyKhoModel.FK_UR_USer" FromRole="Table_User" ToRole="UserRole" />
+        </EntityType>
+        <Association Name="FK__Phieu_Nha__UserI__2739D489">
+          <End Type="QuanLyKhoModel.Table_User" Role="Table_User" Multiplicity="0..1" />
+          <End Type="QuanLyKhoModel.Phieu_Nhap" Role="Phieu_Nhap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Phieu_Nhap">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phieu_Xua__UserI__282DF8C2">
+          <End Type="QuanLyKhoModel.Table_User" Role="Table_User" Multiplicity="0..1" />
+          <End Type="QuanLyKhoModel.Phieu_Xuat" Role="Phieu_Xuat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Phieu_Xuat">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserProfi__UserI__3D5E1FD2">
+          <End Type="QuanLyKhoModel.Table_User" Role="Table_User" Multiplicity="1" />
+          <End Type="QuanLyKhoModel.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UR_USer">
+          <End Type="QuanLyKhoModel.Table_User" Role="Table_User" Multiplicity="1" />
+          <End Type="QuanLyKhoModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table_User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLyKhoModelStoreContainer" CdmEntityContainer="QuanLyKhoEntities">
+          <EntitySetMapping Name="Kho_Chua">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Kho_Chua">
+              <MappingFragment StoreEntitySet="Kho_Chua">
+                <ScalarProperty Name="Hang_Hoa_Id" ColumnName="Hang_Hoa_Id" />
+                <ScalarProperty Name="So_Luong" ColumnName="So_Luong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Loai_SP">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Loai_SP">
+              <MappingFragment StoreEntitySet="Loai_SP">
+                <ScalarProperty Name="Loai_Sp_Id" ColumnName="Loai_Sp_Id" />
+                <ScalarProperty Name="Ten_Loai" ColumnName="Ten_Loai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nha_Cung_Cap">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Nha_Cung_Cap">
+              <MappingFragment StoreEntitySet="Nha_Cung_Cap">
+                <ScalarProperty Name="Nha_Cung_Cap_Id" ColumnName="Nha_Cung_Cap_Id" />
+                <ScalarProperty Name="Ten_Nha_Cung_Cap" ColumnName="Ten_Nha_Cung_Cap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phieu_Nhap_Hang_Hoa">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Phieu_Nhap_Hang_Hoa">
+              <MappingFragment StoreEntitySet="Phieu_Nhap_Hang_Hoa">
+                <ScalarProperty Name="Hang_Hoa_id" ColumnName="Hang_Hoa_id" />
+                <ScalarProperty Name="Phieu_Nhap_Id" ColumnName="Phieu_Nhap_Id" />
+                <ScalarProperty Name="Don_gia" ColumnName="Don_gia" />
+                <ScalarProperty Name="So_Luong" ColumnName="So_Luong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phieu_Xuat_Kho_Chua">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Phieu_Xuat_Kho_Chua">
+              <MappingFragment StoreEntitySet="Phieu_Xuat_Kho_Chua">
+                <ScalarProperty Name="Hang_Hoa_Id" ColumnName="Hang_Hoa_Id" />
+                <ScalarProperty Name="Phieu_Xuat_Id" ColumnName="Phieu_Xuat_Id" />
+                <ScalarProperty Name="Don_Gia" ColumnName="Don_Gia" />
+                <ScalarProperty Name="So_Luong" ColumnName="So_Luong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Role">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Table_Role">
+              <MappingFragment StoreEntitySet="Table_Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleDiscription" ColumnName="RoleDiscription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_Ma_Phieu_Gan_Nhat" FunctionName="QuanLyKhoModel.Store.sp_Ma_Phieu_Gan_Nhat">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QuanLyKhoModel.sp_Ma_Phieu_Gan_Nhat_Result">
+                <ScalarProperty Name="Phieu_Nhap_Id" ColumnName="Phieu_Nhap_Id" />
+                <ScalarProperty Name="Ngay_Nhap" ColumnName="Ngay_Nhap" />
+                <ScalarProperty Name="Tong_Tien" ColumnName="Tong_Tien" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateTongTien" FunctionName="QuanLyKhoModel.Store.sp_UpdateTongTien" />
+          <EntitySetMapping Name="Phieu_Nhap">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Phieu_Nhap">
+              <MappingFragment StoreEntitySet="Phieu_Nhap">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Tong_Tien" ColumnName="Tong_Tien" />
+                <ScalarProperty Name="Ngay_Nhap" ColumnName="Ngay_Nhap" />
+                <ScalarProperty Name="Phieu_Nhap_Id" ColumnName="Phieu_Nhap_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phieu_Xuat">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Phieu_Xuat">
+              <MappingFragment StoreEntitySet="Phieu_Xuat">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Ngay_Xuat" ColumnName="Ngay_Xuat" />
+                <ScalarProperty Name="Tong_Tien" ColumnName="Tong_Tien" />
+                <ScalarProperty Name="Phieu_Xuat_Id" ColumnName="Phieu_Xuat_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hang_Hoa">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Hang_Hoa">
+              <MappingFragment StoreEntitySet="Hang_Hoa">
+                <ScalarProperty Name="Nha_Cung_Cap_Id" ColumnName="Nha_Cung_Cap_Id" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Ma_Loai" ColumnName="Ma_Loai" />
+                <ScalarProperty Name="Ten_Hang_Hoa" ColumnName="Ten_Hang_Hoa" />
+                <ScalarProperty Name="Hang_Hoa_Id" ColumnName="Hang_Hoa_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_User">
+            <EntityTypeMapping TypeName="QuanLyKhoModel.Table_User">
+              <MappingFragment StoreEntitySet="Table_User">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,27 @@
+﻿@model QuanLyKho.Models.ModelDB.Nha_Cung_Cap
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Nha_Cung_Cap</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ten_Nha_Cung_Cap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ten_Nha_Cung_Cap)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Nha_Cung_Cap_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

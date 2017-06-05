@@ -1,0 +1,305 @@
+﻿@model List<QuanLyKho.Models.ModelDB.Kho_Chua>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutDataTable.cshtml";
+   
+    
+}
+
+
+<h2>Index</h2>
+
+<section class="content-header">
+    <h1>
+        Data Tables
+        <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><span class="label label-success">Phiếu xuất kho</span></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="tableKho" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                                <th>Đơn giá (VNĐ)</th>
+                              
+                                <th>Số lượng</th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+
+                        <tfoot>
+                            <tr>
+                                <td><button type="button" class="btn btn-block btn-primary" id="ketThuc">Kết thúc</button></td>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Danh sách hàng hóa trong kho</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    @using (Html.BeginForm())
+                    {
+
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                                
+                              <th hidden="hidden"></th>
+                            
+                                <th hidden="hidden"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Hang_Hoa.Ten_Hang_Hoa</td>
+                                    <td>@item.Hang_Hoa.Loai_SP.Ten_Loai</td>
+                                    <td>@item.Hang_Hoa.Nha_Cung_Cap.Ten_Nha_Cung_Cap</td>
+                                    <td hidden="hidden"><input type="number" class="form-control" /></td>
+
+                                 
+                                    <td hidden="hidden"><input type="number" class="form-control @item.Hang_Hoa_Id" value="@item.So_Luong"/></td>
+                                    <td class="bam"><input type="button" class="btn btn-block btn-success" id="@item.Hang_Hoa_Id" value="Chọn" /></td>
+                                </tr>
+
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                                <th hidden="hidden"></th>
+
+                                <th hidden="hidden"></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    }
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+<script type="text/javascript">
+  
+
+    $(document).ready(function () {
+        var ktra = 0;
+        var mangTT = new Array();
+        var mangGTMax = new Array();
+        
+        $("input[type='number']").keydown(function (event) {
+
+            if ((event.which < 48 || event.which > 57) && event.which != 8) {
+                alert("Chi duoc nhap so");
+                return false;
+            }
+            else {
+                
+                for (var i = 0; i < mangGTMax.length; i++) {
+                    var kq = mangGTMax[i].SL;
+                    var luu = $("input." + mangGTMax[i].id);
+                    $("input." + mangGTMax[i].id).on("keyup", function () {
+                       
+                        gtri = $(this).val();
+                        if (parseInt(gtri) > parseInt(kq)) {
+                            alert("Không được vượt quá số lượng trong kho");
+                            $(this).val(kq);
+                        }
+                        //if (parseInt(gtri) > parseInt(mangGTMax[i].SL))
+                        //    alert("qua gioi hang");
+                       
+                    });
+                   
+
+
+                }
+            }
+          
+            //} else {
+
+            //    ktra = parseInt($(this).val() * 10) + parseInt(event.key);
+            //    if (ktra > 20) {
+            //        alert(ktra);
+            //        return false;
+            //    }
+            //}
+
+        } );
+      
+    
+        
+       
+
+        $("#example1").DataTable();
+
+
+     
+
+        $("#example1 tr").each(function () {
+            var tr = $(this); //lay ra hang vua an nut
+            $(this).children(".bam").click(function () {
+
+                var tdNut = $(this);
+                var id = tdNut.children().attr("id"); //lay ra id hang hoa
+                var vitri = mangTT.indexOf(id);   //kiem tra hang hoa co trong danh sach xuat kho khong
+                if (vitri == -1) //neu ko co trong danh sach xuat
+                {
+                    mangTT.push(id);
+                    var sl = new Object();
+                    sl.id = id;
+                    sl.SL = $("." + id).val();
+                    mangGTMax.push(sl);
+                    alert(JSON.stringify(sl));
+                    alert(JSON.stringify(mangGTMax));
+                    tr.fadeOut(1000, function () {
+                        tdNut.children().val("Bỏ chọn");
+                        tdNut.prev().prev().removeAttr("hidden");
+                        tdNut.prev().removeAttr("hidden");
+                      
+                        $("#tableKho tbody").append(tr);
+                        $(this).fadeIn(1000);
+                    })
+                }
+                else {
+                    mangTT.splice(vitri, 1);
+                    mangGTMax.splice(vitri, 1);
+                    alert(JSON.stringify(mangGTMax));
+                    tr.fadeOut(1000, function () {
+                        tdNut.children().val("Chọn");
+                        tdNut.prev().prev().attr("hidden", "hidden");
+                        tdNut.prev().attr("hidden","hidden");
+                        $("#example1 tbody").append(tr);
+                        $(this).fadeIn(1000);
+                    })
+                }
+
+
+            });
+
+        });
+
+
+        $("#ketThuc").click(function () {
+            var ktra = 0;
+            var mang = new Array();
+            var dem = 0;
+
+            for (var i = 0; i < mangTT.length; i++) {
+
+                
+
+                if ($("." + mangTT[i]).val().length == 0)
+                {
+                    alert("Nhập số lượng");
+                    ktra++;
+                    return false;
+                }
+                
+                else if ($("." + mangTT[i]).parent().prev().children().val().length == 0) {
+                    alert("Nhap don gia");
+                    ktra++;
+                    return false;
+                }
+                
+               
+                else {
+                    var Phieu_Nhap_Json = new Object();
+                    Phieu_Nhap_Json.Hang_Hoa_id = mangTT[i];
+                    Phieu_Nhap_Json.So_Luong = $("." + mangTT[i]).val();
+                    Phieu_Nhap_Json.Don_gia = $("#" + mangTT[i]).parent().prev().prev().children().val();
+                    mang.push(Phieu_Nhap_Json);
+
+
+                }
+
+            }
+            if(mang.length>0)
+            {
+                if (ktra == 0 && confirm("Bạn có chắc chắn lưu?")) {
+                    var json = JSON.stringify(mang);
+                    alert(json);
+                    $.ajax({
+                        type: "POST",
+                        url: '/Phieu_Xuat_Kho_Chua/InsertPhieuXuat',
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: json,
+                        success: function (response) {
+                            if(response.ok == true)
+                            {
+                                alert("Tao phieu xuat thanh cong");
+                                window.location = response.newurl;
+                            }
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        }
+
+
+                    });
+                 
+
+                }
+            }
+            else if(mang.length == 0)
+            {
+                alert("Không có dữ liệu");
+            }
+
+        })
+
+    })
+
+
+
+
+
+
+</script>

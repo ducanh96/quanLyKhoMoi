@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<QuanLyKho.Models.ModelDB.Phieu_Xuat>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "DSPX";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>DSPX</h2>
+
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"><span class="label label-primary">Danh sách phiếu nhập</span></h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input name="table_search" class="form-control pull-right" placeholder="Search" type="text">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Mã phiếu</th>
+                        <th>Người nhập</th>
+                        <th>Ngày nhập</th>
+                        <th>Tổng tiền</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Phieu_Xuat_Id</td>
+                            <td>@item.Table_User.UserProfile.Name</td>
+                            <td>@item.Ngay_Xuat</td>
+                            <td>@string.Format("{0:0,0}", item.Tong_Tien)</td>
+                            <td><a href="@Url.Action("InPhieuXuat",new {id = item.Phieu_Xuat_Id })">Chi tiết</a></td>
+                        </tr>
+                    }
+
+
+                </tbody>
+
+
+
+            </table>
+        </div>
+        <div>
+            @Html.PagedListPager(Model, page => Url.Action("DSPX", new { page }))
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>

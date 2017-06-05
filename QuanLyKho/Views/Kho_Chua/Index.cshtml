@@ -1,0 +1,78 @@
+﻿@model List<QuanLyKho.Models.ModelDB.Kho_Chua>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutDataTable.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Data Tables
+       
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box -->
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><span class="label label-success">Hàng hóa trong kho</span></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                              
+                               <th>Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Hang_Hoa.Ten_Hang_Hoa</td>
+                                    <td>@item.Hang_Hoa.Loai_SP.Ten_Loai</td>
+                                    <td>@item.Hang_Hoa.Nha_Cung_Cap.Ten_Nha_Cung_Cap</td>
+                                  
+                                    <td>@item.So_Luong</td>
+                                  
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Tên hàng hóa</th>
+                                <th>Loại sản phẩm</th>
+                                <th>Tên nhà cung cấp</th>
+                               
+                                <th>Số lượng</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#example1").DataTable();
+    });
+</script>

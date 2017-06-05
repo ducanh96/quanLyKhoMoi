@@ -1,0 +1,27 @@
+﻿@model QuanLyKho.Models.ModelDB.Loai_SP
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Loai_SP</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ten_Loai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ten_Loai)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Loai_Sp_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

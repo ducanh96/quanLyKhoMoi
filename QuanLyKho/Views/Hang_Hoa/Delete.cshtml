@@ -1,0 +1,58 @@
+﻿@model QuanLyKho.Models.ModelDB.Hang_Hoa
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Hang_Hoa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Ten_Hang_Hoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ten_Hang_Hoa)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Loai_SP.Ten_Loai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Loai_SP.Ten_Loai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nha_Cung_Cap.Ten_Nha_Cung_Cap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nha_Cung_Cap.Ten_Nha_Cung_Cap)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<QuanLyKho.Models.ModelDB.Nha_Cung_Cap>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Ten_Nha_Cung_Cap)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ten_Nha_Cung_Cap)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Nha_Cung_Cap_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Nha_Cung_Cap_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Nha_Cung_Cap_Id })
+        </td>
+    </tr>
+}
+
+</table>

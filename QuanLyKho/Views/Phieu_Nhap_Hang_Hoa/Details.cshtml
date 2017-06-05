@@ -1,0 +1,51 @@
+﻿@model QuanLyKho.Models.ModelDB.Phieu_Nhap_Hang_Hoa
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Phieu_Nhap_Hang_Hoa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Don_gia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Don_gia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.So_Luong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.So_Luong)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phieu_Nhap.Phieu_Nhap_Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phieu_Nhap.Phieu_Nhap_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hang_Hoa.Ten_Hang_Hoa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hang_Hoa.Ten_Hang_Hoa)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
