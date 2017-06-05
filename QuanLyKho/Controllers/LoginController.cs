@@ -166,7 +166,51 @@ namespace QuanLyKho.Controllers
         }
 
         //tuyet lam CreateUserByAdmin
+        [HttpPost]
+        public ActionResult CreateUserByAdmin(User _user)
+        {
+            using (var db = new QuanLyKhoEntities())
+            {
+                ViewBag.Role = db.Table_Role.ToList();
+                ManagerLogin managerLogin = new ManagerLogin();
+                if (ModelState.IsValid)
+                {
+                    if (managerLogin.IsExitsUserToSignUp(_user.UserName))
+                    {
+                        Response.Write("<script>alert('Đã tồn tại tài khoản')</script>");
+                    }
+                    else
+                    {
 
+                        try
+                        {
+                            var tbl_user = new Table_User();
+                            tbl_user.UserName = _user.UserName;
+                            tbl_user.UserPassword = _user.UserPassword;
+                            db.Table_User.Add(tbl_user);
+                            db.SaveChanges();
+                            var userRole = new UserRole();
+                            userRole.UserId = tbl_user.UserId;
+                            userRole.RoleId = _user.Role;
+                            userRole.IsActive = true;
+                            db.UserRoles.Add(userRole);
+                            db.SaveChanges();
+                            var userProfile = new UserProfile();
+                            userProfile.UserId = tbl_user.UserId;
+                            userProfile.Name = _user.Name;//
+                            db.UserProfiles.Add(userProfile);
+                            db.SaveChanges();
+
+                        }
+                        catch
+                        {
+                            Response.Write("<script>alert('Lỗi submit')</script>");
+                        }
+                    }
+                }
+            }
+            return View();
+        }
 
         #region Danh sach người dùng
         public ActionResult ListUser()
