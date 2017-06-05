@@ -123,10 +123,19 @@ namespace QuanLyKho.Controllers
         }
 
         //khoa lam httpget loginuser
-       
+        [AuthorizeRole(new string[] { "Admin" })]
+        public ActionResult CreateUserByAdmin()
+        {
+            using (var db = new QuanLyKhoEntities())
+            {
+                //ViewBag.Role = new SelectList(db.Table_Role.ToList(), "RoleId", "RoleName","RoleId");
+                ViewBag.Role = db.Table_Role.ToList();
+            }
+            return View();
+        }
 
         //tuyet lam CreateUserByAdmin
-       
+
 
         #region Danh sach người dùng
         public ActionResult ListUser()
