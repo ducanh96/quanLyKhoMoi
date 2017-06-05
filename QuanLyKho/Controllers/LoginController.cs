@@ -32,7 +32,28 @@ namespace QuanLyKho.Controllers
         }
 
         //dung lam httpPost  ProfileUser
-
+        [HttpPost]
+        public ActionResult ProfileUser(UserProfile profile)
+        {
+            using (var db = new QuanLyKhoEntities())
+            {
+                int? id = db.Table_User.Where(x => x.UserName == User.Identity.Name).FirstOrDefault().UserId;
+                if (id != null)
+                {
+                    var user = db.UserProfiles.Find(id);
+                    user.Address = profile.Address;
+                    user.Name = profile.Name;
+                    user.Sex = profile.Sex;
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            return RedirectToAction("Index", "Hang_Hoa");
+        }
 
 
         [HttpGet]
