@@ -19,12 +19,22 @@ namespace QuanLyKho.Controllers
         // GET: Login
         public static ManagerLogin manager = new ManagerLogin();
         //linh lam httpPost  ProfileUser
-       
+        [Authorize]
+        public ActionResult ProfileUser()
+        {
+            int id = ManagerLogin.GetId(User.Identity.Name);
+            UserProfile profile = manager.GetUserProfile(id);
+            if (profile == null)
+            {
+                return HttpNotFound();
+            }
+            return View(profile);
+        }
 
         //dung lam httpPost  ProfileUser
-       
 
-      
+
+
         [HttpGet]
         public ActionResult LoginUser()
         {
