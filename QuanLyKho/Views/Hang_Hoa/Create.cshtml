@@ -45,7 +45,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Ma_Loai, "Ma_Loai", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.Ma_Loai, "Ma_Loai", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-2 control-label">
+                <label>Tên loại</label>
+            </div>
             <div class="col-md-10">
                 @Html.DropDownList("Ma_Loai", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Ma_Loai, "", new { @class = "text-danger" })
@@ -69,7 +72,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Nha_Cung_Cap_Id, "Nha_Cung_Cap_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.Nha_Cung_Cap_Id, "Nha_Cung_Cap_Id", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-2 control-label">
+                <label>Tên nhà cung cấp</label>
+            </div>
             <div class="col-md-10">
                 @Html.DropDownList("Nha_Cung_Cap_Id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Nha_Cung_Cap_Id, "", new { @class = "text-danger" })
@@ -100,7 +106,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Phần đầu Modal</h4>
+                    <h4 class="modal-title">Tạo loại sản phẩm</h4>
                     
                 </div>
                @using (Ajax.BeginForm("CreateLoai_SP",opt))
@@ -170,7 +176,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Phần đầu Modal</h4>
+                    <h4 class="modal-title">Tạo nhà cung cấp</h4>
 
                 </div>
                 @using (Ajax.BeginForm("CreateNCC", opt2))
